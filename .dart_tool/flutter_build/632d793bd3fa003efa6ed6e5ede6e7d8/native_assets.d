@@ -1,0 +1,1 @@
+ /Users/giammy/Desktop/Giammy/Flutter/news_app/news_app/.dart_tool/flutter_build/632d793bd3fa003efa6ed6e5ede6e7d8/native_assets.yaml: 
