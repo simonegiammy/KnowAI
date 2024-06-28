@@ -1,0 +1,107 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Android related
+*.apk
+*.aar
+*.ap_
+// ndk specific directories
+**/android/app/src/main/jniLibs/
+
+# iOS related
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/engine/
+**/ios/Flutter/ephemeral/Flutter.framework
+**/ios/ServiceDefinitions.json
+**/ios/Runner.xcworkspace/
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Xcode related
+**/*.xcworkspace
+**/*.xcuserdata
+**/*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/xcschemes/*.xcscheme
+**/*.xcuserstate
+
+# Android Studio/IntelliJ related
+.idea/
+**/.idea/
+*.iml
+
+# VS Code related
+.vscode/
+
+# macOS related
+**/macos/Flutter/ephemeral/
+**/macos/Flutter/Flutter.podspec
+**/macos/Flutter/GeneratedPluginRegistrant.*
+**/macos/Flutter/Flutter.xcframework
+**/macos/Flutter/flutter_assets/
+**/macos/Flutter/flutter_export_environment.sh
+**/macos/Flutter/flutter_export_environment.xcconfig
+**/macos/Flutter/engine/
+**/macos/Flutter/App.framework
+**/macos/Flutter/Flutter.framework
+**/macos/Flutter/App.xcframework
+
+# Web related
+**/web/.*.DS_Store
+**/web/.flutter-plugins-dependencies
+**/web/.flutter-plugins
+**/web/build/
+
+# Windows related
+**/windows/flutter/ephemeral/
+**/windows/flutter/GeneratedPluginRegistrant.*
+
+# Linux related
+**/linux/flutter/ephemeral/
+**/linux/flutter/GeneratedPluginRegistrant.*
+
+# Coverage related
+coverage/
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# C++ related
+**/linux/flutter/GeneratedPluginRegistrant.*
+**/windows/flutter/GeneratedPluginRegistrant.*
+**/macos/flutter/GeneratedPluginRegistrant.*
+
+# Miscellaneous
+*.class
+*.lock
+*.log
+*.tmp
+*.swp
+*.swo
+.DS_Store
+.project
+.idea/
+*.iml
+*.hprof
+*.DS_Store
+*.log
+*.diff
+*.patch
+*.sublime-project
+*.sublime-workspace
+*.xcodeproj/
+!**/Pods/
+**/Pods/
+xcuserdata
