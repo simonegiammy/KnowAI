@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "267709821744",
+    "project_id": "knowai-cf1d4",
+    "storage_bucket": "knowai-cf1d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267709821744:android:9df92f9158d5ce6b7f8ef5",
+        "android_client_info": {
+          "package_name": "com.example.news_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtwcPnRe8amX695LKiGotvK9ddYZAEjwc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267709821744:android:e4f3a52ef3fc5a6b7f8ef5",
+        "android_client_info": {
+          "package_name": "com.giammy.knowai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtwcPnRe8amX695LKiGotvK9ddYZAEjwc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

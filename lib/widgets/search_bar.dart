@@ -3,7 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:news_app/style.dart';
 
 class AppSearchBar extends StatelessWidget {
-  const AppSearchBar({super.key});
+  final TextEditingController controller;
+  const AppSearchBar({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class AppSearchBar extends StatelessWidget {
           ),
           Expanded(
               child: TextField(
+            controller: controller,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "Cerca il corso che fa per te...",

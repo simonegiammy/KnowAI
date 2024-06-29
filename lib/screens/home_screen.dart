@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:news_app/data_provider/auth_provider.dart';
+import 'package:news_app/data_provider/courses_provider.dart';
+import 'package:news_app/model/course.dart';
 import 'package:news_app/style.dart';
 import 'package:news_app/widgets/button.dart';
 import 'package:news_app/widgets/cookie.dart';
@@ -23,6 +29,34 @@ class _HomeScreenState extends State<HomeScreen> {
     "Copywriting"
   ];
   String selectedCategory = "Tech";
+  List<Course>? courses;
+  TextEditingController searchController = TextEditingController();
+  bool isSearching = false;
+  @override
+  void initState() {
+    searchController.addListener(() {
+      if (searchController.text.isEmpty) {
+        isSearching = false;
+      } else {
+        isSearching = true;
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      courses = await CoursesProvider.getData("tutorial_titles");
+      if (AuthenticationProvider.getCurrentUser()?.displayName == null) {
+        await AuthenticationProvider.getCurrentUser()
+            ?.updateDisplayName("Simone");
+      }
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context);
@@ -45,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 30,
                           )),
                       TextSpan(
-                          text: "Simone!",
+                          text:
+                              "${AuthenticationProvider.getCurrentUser()!.displayName}!",
                           style: AppStyle.title.copyWith(
                             fontSize: 30,
                           ))
@@ -78,51 +113,86 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(
                               height: 20,
                             ),
-                            const AppSearchBar()
+                            AppSearchBar(
+                              controller: searchController,
+                            )
                           ],
                         ),
                       ),
+                      if (!isSearching) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8),
+                          child: Text(
+                            "Categorie:",
+                            style: AppStyle.semibold.copyWith(fontSize: 24),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 0),
+                          child: Wrap(
+                            spacing: 4,
+                            runSpacing: 4,
+                            children: [
+                              for (String s in categories)
+                                GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedCategory = s;
+                                      });
+                                    },
+                                    child: CookieTile(
+                                        text: s,
+                                        selected: s == selectedCategory))
+                            ],
+                          ),
+                        ),
+                      ],
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 8),
-                        child: Text(
-                          "Categorie:",
-                          style: AppStyle.semibold.copyWith(fontSize: 24),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 0),
-                        child: Wrap(
-                          spacing: 4,
-                          runSpacing: 4,
-                          children: [
-                            for (String s in categories)
-                              GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedCategory = s;
-                                    });
-                                  },
-                                  child: CookieTile(
-                                      text: s, selected: s == selectedCategory))
-                          ],
-                        ),
-                      ),
-                      const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                         child: Column(
                           children: [
-                            CourseTile(),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            CourseTile(),
-                            SizedBox(
-                              height: 8,
-                            ),
-                            CourseTile()
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Column(
+                                children: isSearching
+                                    ? [
+                                        for (Course c in (courses?.where(
+                                                (element) => element.title!
+                                                    .toString()
+                                                    .toLowerCase()
+                                                    .contains(searchController
+                                                        .text
+                                                        .toLowerCase()))) ??
+                                            [])
+                                          CourseTile(course: c)
+                                      ]
+                                    : [
+                                        if ((courses?.where((element) =>
+                                                    element.category ==
+                                                    selectedCategory) ??
+                                                [])
+                                            .isEmpty)
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 24),
+                                            child: Text(
+                                              "Non ci sono corsi disponibili per questa categoria",
+                                              style: AppStyle.semibold,
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        for (Course c in courses?.where(
+                                                (element) =>
+                                                    element.category ==
+                                                    selectedCategory) ??
+                                            [])
+                                          CourseTile(course: c)
+                                      ],
+                              ),
+                            )
                           ],
                         ),
                       )
