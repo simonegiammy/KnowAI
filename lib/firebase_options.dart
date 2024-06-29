@@ -42,17 +42,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAcRfWoHx2PaGlCXNvEbAla-audr_c22Hc',
-    appId: '1:267709821744:web:bce6d0e805a9ab377f8ef5',
+    appId: '1:267709821744:web:6bc289a38733bd317f8ef5',
     messagingSenderId: '267709821744',
     projectId: 'knowai-cf1d4',
     authDomain: 'knowai-cf1d4.firebaseapp.com',
     storageBucket: 'knowai-cf1d4.appspot.com',
-    measurementId: 'G-TVPNYFQZZD',
+    measurementId: 'G-LT55BEMR0S',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAtwcPnRe8amX695LKiGotvK9ddYZAEjwc',
-    appId: '1:267709821744:android:9df92f9158d5ce6b7f8ef5',
+    appId: '1:267709821744:android:e4f3a52ef3fc5a6b7f8ef5',
     messagingSenderId: '267709821744',
     projectId: 'knowai-cf1d4',
     storageBucket: 'knowai-cf1d4.appspot.com',
@@ -60,29 +60,30 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCnNu-GH618IR3zExZ6_A1NU5Gm6TJB_dc',
-    appId: '1:267709821744:ios:1f408f796997792e7f8ef5',
+    appId: '1:267709821744:ios:dfbe0a327c1f7b5f7f8ef5',
     messagingSenderId: '267709821744',
     projectId: 'knowai-cf1d4',
     storageBucket: 'knowai-cf1d4.appspot.com',
-    iosBundleId: 'com.example.newsApp',
+    iosBundleId: 'com.giammy.knowai',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCnNu-GH618IR3zExZ6_A1NU5Gm6TJB_dc',
-    appId: '1:267709821744:ios:1f408f796997792e7f8ef5',
+    appId: '1:267709821744:ios:dfbe0a327c1f7b5f7f8ef5',
     messagingSenderId: '267709821744',
     projectId: 'knowai-cf1d4',
     storageBucket: 'knowai-cf1d4.appspot.com',
-    iosBundleId: 'com.example.newsApp',
+    iosBundleId: 'com.giammy.knowai',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyAcRfWoHx2PaGlCXNvEbAla-audr_c22Hc',
-    appId: '1:267709821744:web:d023d48a2fbe6de87f8ef5',
+    appId: '1:267709821744:web:6bc289a38733bd317f8ef5',
     messagingSenderId: '267709821744',
     projectId: 'knowai-cf1d4',
     authDomain: 'knowai-cf1d4.firebaseapp.com',
     storageBucket: 'knowai-cf1d4.appspot.com',
-    measurementId: 'G-1NY7L8WCPT',
+    measurementId: 'G-LT55BEMR0S',
   );
+
 }

@@ -1,18 +1,18 @@
 import 'dart:convert';
 
+import 'package:KnowAI/data_provider/auth_provider.dart';
+import 'package:KnowAI/data_provider/courses_provider.dart';
+import 'package:KnowAI/model/course.dart';
+import 'package:KnowAI/style.dart';
+import 'package:KnowAI/widgets/button.dart';
+import 'package:KnowAI/widgets/cookie.dart';
+import 'package:KnowAI/widgets/course_tile.dart';
+import 'package:KnowAI/widgets/search_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:news_app/data_provider/auth_provider.dart';
-import 'package:news_app/data_provider/courses_provider.dart';
-import 'package:news_app/model/course.dart';
-import 'package:news_app/style.dart';
-import 'package:news_app/widgets/button.dart';
-import 'package:news_app/widgets/cookie.dart';
-import 'package:news_app/widgets/course_tile.dart';
-import 'package:news_app/widgets/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -189,7 +189,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     element.category ==
                                                     selectedCategory) ??
                                             [])
-                                          CourseTile(course: c)
+                                          Hero(
+                                              tag: "Hero-Course",
+                                              child: CourseTile(course: c))
                                       ],
                               ),
                             )

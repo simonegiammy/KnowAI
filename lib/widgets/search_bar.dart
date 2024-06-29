@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:news_app/style.dart';
+import 'package:KnowAI/style.dart';
 
 class AppSearchBar extends StatelessWidget {
   final TextEditingController controller;

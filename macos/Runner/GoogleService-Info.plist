@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.newsApp</string>
+	<string>com.giammy.knowai</string>
 	<key>PROJECT_ID</key>
 	<string>knowai-cf1d4</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:267709821744:ios:1f408f796997792e7f8ef5</string>
+	<string>1:267709821744:ios:dfbe0a327c1f7b5f7f8ef5</string>
 </dict>
 </plist>

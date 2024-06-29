@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:267709821744:android:9df92f9158d5ce6b7f8ef5",
+        "mobilesdk_app_id": "1:267709821744:android:d7d3030bed4707517f8ef5",
         "android_client_info": {
-          "package_name": "com.example.news_app"
+          "package_name": "com.example.knowai"
         }
       },
       "oauth_client": [],

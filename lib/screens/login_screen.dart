@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/data_provider/auth_provider.dart';
-import 'package:news_app/data_provider/firebase_service.dart';
-import 'package:news_app/screens/home_screen.dart';
-import 'package:news_app/style.dart';
-import 'package:news_app/widgets/input_field.dart';
-import 'package:news_app/widgets/primary_button.dart';
+import 'package:KnowAI/data_provider/auth_provider.dart';
+import 'package:KnowAI/data_provider/firebase_service.dart';
+import 'package:KnowAI/screens/home_screen.dart';
+import 'package:KnowAI/style.dart';
+import 'package:KnowAI/widgets/input_field.dart';
+import 'package:KnowAI/widgets/primary_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
