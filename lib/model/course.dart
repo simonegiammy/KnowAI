@@ -1,4 +1,5 @@
 class Course {
+  String? id;
   String? category;
   String? title;
   String? level;
@@ -9,7 +10,8 @@ class Course {
   String? imageUrl;
 
   Course(
-      {this.category,
+      {this.id,
+      this.category,
       this.title,
       this.level,
       this.description,
@@ -19,18 +21,23 @@ class Course {
       this.numberLessons});
 
   Course.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     category = json['category'];
     title = json['title'];
     level = json['level'];
     imageUrl = json['imageURL'];
     description = json['description'];
     createdAt = json['createdAt'];
-    tags = json['tags'].cast<String>();
+    /*
+    if (json['tags'] ?? [].isNotEmpty) {
+      tags = json['tags'].cast<String>();
+    }*/
     numberLessons = json['numberLessons'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['category'] = category;
     data['imageURL'] = imageUrl;
     data['title'] = title;

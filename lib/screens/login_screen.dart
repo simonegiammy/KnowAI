@@ -19,6 +19,22 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   @override
+  void initState() {
+    /*WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      User? u = await AuthenticationProvider.signInWithEmailAndPassword(
+          "simone.giammusso@gmail.com", "ciaociao");
+      if (u != null) {
+        Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) {
+            return const HomeScreen();
+          },
+        ));
+      }
+    });*/
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppStyle.black,
@@ -27,6 +43,15 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Expanded(flex: 2, child: Container()),
+            Text(
+              "Benvenuto in KnowAI",
+              style: AppStyle.title,
+            ),
+            Text(
+              "Inserisci le tue credenziali",
+              style: AppStyle.semibold,
+            ),
             Expanded(child: Container()),
             Text(
               "Email",
@@ -48,14 +73,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       await AuthenticationProvider.signInWithEmailAndPassword(
                           emailController.text, passwordController.text);
                   if (u != null) {
-                    Navigator.push(context, MaterialPageRoute(
+                    Navigator.pushReplacement(context, MaterialPageRoute(
                       builder: (context) {
                         return const HomeScreen();
                       },
                     ));
                   }
                 }),
-            Expanded(child: Container())
+            Expanded(flex: 4, child: Container())
           ],
         ),
       ),

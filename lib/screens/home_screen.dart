@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:KnowAI/data_provider/auth_provider.dart';
 import 'package:KnowAI/data_provider/courses_provider.dart';
 import 'package:KnowAI/model/course.dart';
+import 'package:KnowAI/screens/course_screen.dart';
+import 'package:KnowAI/screens/saved_courses_screen.dart';
 import 'package:KnowAI/style.dart';
 import 'package:KnowAI/widgets/button.dart';
 import 'package:KnowAI/widgets/cookie.dart';
 import 'package:KnowAI/widgets/course_tile.dart';
+import 'package:KnowAI/widgets/fab.dart';
 import 'package:KnowAI/widgets/search_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,13 +25,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> categories = [
-    "Tech",
-    "Programmazione",
-    "Grafica",
-    "Copywriting"
-  ];
-  String selectedCategory = "Tech";
+  List<String> categories = [];
+  String selectedCategory = "";
   List<Course>? courses;
   TextEditingController searchController = TextEditingController();
   bool isSearching = false;
@@ -45,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      courses = await CoursesProvider.getData("tutorial_titles");
+      categories = await CoursesProvider.getCategories() ?? [];
+      selectedCategory = categories[0];
+      courses = await CoursesProvider.getCourses("tutorial_titles");
       if (AuthenticationProvider.getCurrentUser()?.displayName == null) {
         await AuthenticationProvider.getCurrentUser()
             ?.updateDisplayName("Simone");
@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var t = AppLocalizations.of(context);
     return Scaffold(
+        floatingActionButton: const AppFab(),
         backgroundColor: AppStyle.black,
         body: SafeArea(
           child: Column(
@@ -71,22 +72,44 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "Ciao ",
-                          style: AppStyle.regular.copyWith(
-                            fontSize: 30,
-                          )),
-                      TextSpan(
-                          text:
-                              "${AuthenticationProvider.getCurrentUser()!.displayName}!",
-                          style: AppStyle.title.copyWith(
-                            fontSize: 30,
-                          ))
-                    ])),
+                    Expanded(
+                      child: RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: "Ciao ",
+                            style: AppStyle.regular.copyWith(
+                              fontSize: 30,
+                            )),
+                        TextSpan(
+                            text:
+                                "${AuthenticationProvider.getCurrentUser()!.displayName}!",
+                            style: AppStyle.title.copyWith(
+                              fontSize: 30,
+                            ))
+                      ])),
+                    ),
                     AppButton(
-                        iconPath: "assets/icons/icon_sort.svg", onTap: () {})
+                        iconPath: "assets/icons/icon_refresh.svg",
+                        onTap: () async {
+                          categories =
+                              await CoursesProvider.getCategories() ?? [];
+                          selectedCategory = categories[0];
+                          courses = await CoursesProvider.getCourses(
+                              "tutorial_titles");
+                          setState(() {});
+                        }),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    AppButton(
+                        iconPath: "assets/icons/icon_bookmark.svg",
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return const SavedCoursesScreen();
+                            },
+                          ));
+                        })
                   ],
                 ),
               ),
@@ -167,7 +190,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .text
                                                         .toLowerCase()))) ??
                                             [])
-                                          CourseTile(course: c)
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return CourseScreen(
+                                                          course: c);
+                                                    },
+                                                  ));
+                                                },
+                                                child: CourseTile(course: c)),
+                                          )
                                       ]
                                     : [
                                         if ((courses?.where((element) =>
@@ -189,9 +226,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     element.category ==
                                                     selectedCategory) ??
                                             [])
-                                          Hero(
-                                              tag: "Hero-Course",
-                                              child: CourseTile(course: c))
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 4),
+                                            child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return CourseScreen(
+                                                          course: c);
+                                                    },
+                                                  ));
+                                                },
+                                                child: CourseTile(course: c)),
+                                          )
                                       ],
                               ),
                             )

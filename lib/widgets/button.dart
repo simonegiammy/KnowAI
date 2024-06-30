@@ -18,7 +18,10 @@ class AppButton extends StatelessWidget {
           decoration: BoxDecoration(
               color: AppStyle.greenLight,
               borderRadius: const BorderRadius.all(Radius.circular(10))),
-          child: SvgPicture.asset(iconPath)),
+          child: SvgPicture.asset(
+            iconPath,
+            color: Colors.white,
+          )),
     );
   }
 }
