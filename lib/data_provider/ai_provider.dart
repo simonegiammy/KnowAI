@@ -26,7 +26,7 @@ class AIProvider {
         OpenAIChatCompletionChoiceMessageContentItemModel.text(
           '''
 Sto frequentando un corso online, questa è la lezione dal titolo: ${lesson.title}. Spiegami questo argomento in maniera precisa e dettagliata e meticolosa. In particolare devi coprire i seguenti argomenti: ${lesson.content} Inizia direttamente come se stessi scrivendo un libro riguardo l'argormento
-         Devi scrivere almeno 4000 parole!
+        Utilizza una formattazione markdown e scrivi almeno 2000 parole con degli esempi pratici!,
           ''',
         ),
       ],
@@ -35,7 +35,7 @@ Sto frequentando un corso online, questa è la lezione dal titolo: ${lesson.titl
 
     OpenAIChatCompletionModel chatCompletion =
         await OpenAI.instance.chat.create(
-      model: "gpt-4-turbo",
+      model: "gpt-3.5-turbo",
       stop: null,
       // responseFormat: {"type": "json_object"}, //Migliu nenti forse
       seed: 6,
@@ -165,14 +165,14 @@ Sto frequentando un corso online, questa è la lezione dal titolo: ${lesson.titl
     final systemMessage = OpenAIChatCompletionChoiceMessageModel(
       content: [
         OpenAIChatCompletionChoiceMessageContentItemModel.text(
-            '''Ogni messaggio che scrivi deve ritornare in una lista di JSON del genere: 
+            '''Ogni messaggio che scrivi deve ritornare in  JSON del genere: 
      {
      "id":  "genera id casuale",
      "category": "Tema del corso", 
      "title": "titolo", 
      "level" : "principiante", 
      "numberLessons": num, 
-      "description": "descrizione in 300 caratteri del corso"
+      "description": "descrizione in 300 parole del corso"
      }
      '''),
       ],
@@ -191,25 +191,29 @@ Sto frequentando un corso online, questa è la lezione dal titolo: ${lesson.titl
       ],
       role: OpenAIChatMessageRole.user,
     );
-
-    OpenAIChatCompletionModel chatCompletion =
-        await OpenAI.instance.chat.create(
-      model: "gpt-3.5-turbo",
-      // responseFormat: {"type": "json_object"}, //Migliu nenti forse
-      seed: 6,
-      messages: [systemMessage, userMessage],
-      temperature: 0.2,
-      maxTokens: 1000,
-    );
-    // Processa la risposta
-    String? responseContent =
-        chatCompletion.choices.first.message.content!.first.text;
-
+    try {
+      OpenAIChatCompletionModel chatCompletion =
+          await OpenAI.instance.chat.create(
+        model: "gpt-4o",
+        responseFormat: {"type": "json_object"}, //Migliu nenti forse
+        seed: 6,
+        messages: [systemMessage, userMessage],
+        temperature: 0.2,
+        maxTokens: 3000,
+      );
+      // Processa la risposta
+      String? responseContent =
+          chatCompletion.choices.first.message.content!.first.text;
+      print(responseContent);
+      var jsonResponse = json.decode(responseContent ?? "");
+      jsonResponse['id'] = const Uuid().v4();
+      return Course.fromJson(
+          jsonResponse is List ? jsonResponse[0] : jsonResponse);
+    } catch (e) {
+      print(e);
+    }
+    return null;
     // Deserializza la risposta JSON
-    var jsonResponse = json.decode(responseContent ?? "");
-    jsonResponse['id'] = const Uuid().v4();
-    return Course.fromJson(
-        jsonResponse is List ? jsonResponse[0] : jsonResponse);
   }
 
   static Future<List<Lesson>?> generateLessons(
@@ -223,9 +227,8 @@ Sto frequentando un corso online, questa è la lezione dal titolo: ${lesson.titl
      array: [
      {
     "id": 1//in ordine crescente di lezione,
-     "content": "testo integrale della lezione (minimo 1000 parole) con formattazinoe",
+     "content": "testo integrale della lezione (minimo 300 parole) con formattazinoe",
      "title": "titolo della lezione", 
-     "relatedLinks": ["link youtube italia per video utile", ...]
      },
      {...},
       ]
@@ -250,16 +253,17 @@ Sto frequentando un corso online, questa è la lezione dal titolo: ${lesson.titl
 
     OpenAIChatCompletionModel chatCompletion =
         await OpenAI.instance.chat.create(
-      model: "gpt-4o",
-      responseFormat: {"type": "json_object"}, //Migliu nenti forse
+      model: "gpt-3.5-turbo",
+      //responseFormat: {"type": "json_object"}, //Migliu nenti forse
       seed: 6,
       messages: [systemMessage, userMessage],
       temperature: 0.2,
-      maxTokens: 2000,
+      maxTokens: 3000,
     );
-
     String? responseContent =
         chatCompletion.choices.first.message.content!.first.text!;
+    print(responseContent);
+
     List jsonResponse = (json.decode(responseContent ?? "")['array']);
     return jsonResponse.map((e) => Lesson.fromJson(e)).toList();
   }

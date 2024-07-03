@@ -8,9 +8,8 @@ import 'package:KnowAI/screens/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
-  //await dotenv.load(fileName: ".env");
-  //OpenAI.apiKey = dotenv.env['OPENAI_KEY']!;
-  OpenAI.apiKey = "sk-proj-mCNZX3pysIMaaMrQuqfhT3BlbkFJuPoIEPRaF8fkklbliG1h";
+  await dotenv.load(fileName: ".env");
+  OpenAI.apiKey = dotenv.env['OPENAI_KEY']!;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

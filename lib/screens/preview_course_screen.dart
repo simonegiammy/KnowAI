@@ -43,6 +43,8 @@ class _PreviewCourseScreenState extends State<PreviewCourseScreen> {
         lessons = await AIProvider.generateLessons(
             course!.description!, widget.answers, course!.numberLessons!);
       } catch (e) {
+        print(e);
+        /*
         showCupertinoDialog(
           context: context,
           builder: (context) {
@@ -51,7 +53,7 @@ class _PreviewCourseScreenState extends State<PreviewCourseScreen> {
                   course!.description!, widget.answers, course!.numberLessons!);
             });
           },
-        );
+        );*/
       }
       if (mounted) {
         setState(() {

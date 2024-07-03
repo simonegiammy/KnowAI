@@ -6,8 +6,15 @@ class InputField extends StatelessWidget {
   final TextEditingController controller;
   int maxLines = 1;
   String? iconPath;
+  bool isEmail;
+  bool isPassword;
   InputField(
-      {super.key, required this.controller, this.maxLines = 1, this.iconPath});
+      {super.key,
+      required this.controller,
+      this.maxLines = 1,
+      this.iconPath,
+      this.isEmail = false,
+      this.isPassword = false});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +23,8 @@ class InputField extends StatelessWidget {
       maxLines: maxLines,
       style: AppStyle.regular,
       controller: controller,
+      obscureText: isPassword,
+      keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
       decoration: InputDecoration(
           fillColor: AppStyle.gray,
           filled: true,
