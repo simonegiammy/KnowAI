@@ -17,12 +17,15 @@ class AppFab extends StatefulWidget {
 class _AppFabState extends State<AppFab> {
   @override
   Widget build(BuildContext context) {
+    Widget w = SvgPicture.asset(widget.iconPath);
+    if (widget.iconPath == 'assets/icons/icon_back.svg') {
+      w = Transform.rotate(angle: pi / 2, child: w);
+    }
     return FloatingActionButton(
-      backgroundColor: AppStyle.greenDark,
-      onPressed: () {
-        widget.onTap();
-      },
-      child: SvgPicture.asset(widget.iconPath),
-    );
+        backgroundColor: AppStyle.greenDark,
+        onPressed: () {
+          widget.onTap();
+        },
+        child: w);
   }
 }

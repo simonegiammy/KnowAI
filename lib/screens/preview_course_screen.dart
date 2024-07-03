@@ -165,7 +165,6 @@ class _PreviewCourseScreenState extends State<PreviewCourseScreen> {
                             }),
                       ),
                     Container(
-                      height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.symmetric(
                           vertical: 12, horizontal: 20),

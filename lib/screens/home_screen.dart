@@ -233,7 +233,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: isSearching
                                       ? [
                                           for (Course c in (courses?.where(
-                                                  (element) => element.title!
+                                                  (element) => (element.title ??
+                                                          "")
                                                       .toString()
                                                       .toLowerCase()
                                                       .contains(searchController

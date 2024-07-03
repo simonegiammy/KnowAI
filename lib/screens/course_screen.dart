@@ -91,6 +91,8 @@ class _CourseScreenState extends State<CourseScreen> {
                                           left: 16, right: 16),
                                       child: Text(
                                         widget.course.title!,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                         style: AppStyle.semibold
                                             .copyWith(fontSize: 24),
                                       ),
@@ -130,7 +132,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                    height: MediaQuery.of(context).size.height,
+                    // height: double.maxFinite,
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 20),
