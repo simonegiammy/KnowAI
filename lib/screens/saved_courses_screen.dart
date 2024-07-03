@@ -35,7 +35,9 @@ class _SavedCoursesScreenState extends State<SavedCoursesScreen> {
           bottom: false,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 Padding(
                   padding:

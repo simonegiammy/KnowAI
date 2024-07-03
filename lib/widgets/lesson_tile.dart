@@ -38,6 +38,7 @@ class _LessonTileState extends State<LessonTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: const BoxConstraints(maxWidth: 450),
       margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
@@ -92,15 +93,28 @@ class _LessonTileState extends State<LessonTile> {
   }
 
   _buildButton() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          color: isCompleted ? AppStyle.greenLight : AppStyle.red),
-      child: Text(
-        isCompleted ? "Completata  ✅" : "Inizia subito  👩🏻‍💻",
-        style: AppStyle.semibold.copyWith(color: Colors.white, fontSize: 14),
-      ),
-    );
+    if (isCompleted) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
+            color: isCompleted ? AppStyle.greenLight : AppStyle.red),
+        child: Row(
+          children: [
+            Text(
+              "Completata  ",
+              style:
+                  AppStyle.semibold.copyWith(color: Colors.white, fontSize: 14),
+            ),
+            SvgPicture.asset(
+              'assets/icons/icon_check.svg',
+              color: Colors.white,
+              height: 20,
+            )
+          ],
+        ),
+      );
+    }
+    return Container();
   }
 }

@@ -26,8 +26,9 @@ class _NewCourseScreenState extends State<NewCourseScreen> {
     return Scaffold(
       backgroundColor: AppStyle.black,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          margin: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -80,19 +81,6 @@ class _NewCourseScreenState extends State<NewCourseScreen> {
               const SizedBox(
                 height: 20,
               ),
-              FutureBuilder(
-                  future: StorageProvider.getValue(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      value = snapshot.data!;
-                    }
-                    return Text(
-                        "Hai  generato $value/5 corsi!\nPadron Giammy non caga denaro quindi sappi che c'è sto limite",
-                        style: AppStyle.regular.copyWith(
-                            height: 1.1,
-                            fontSize: 16,
-                            color: const Color(0xff858585)));
-                  }),
               const SizedBox(
                 height: 20,
               ),
@@ -120,14 +108,13 @@ class _NewCourseScreenState extends State<NewCourseScreen> {
                           ));
                         }
                       } catch (e) {
-                        showCupertinoDialog(
-                          context: context,
+                        Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return RetryDialog(
-                              onTap: () {},
-                            );
+                            return RetryDialog(onTap: () {
+                              Navigator.pop(context);
+                            });
                           },
-                        );
+                        ));
                       }
                       setState(() {
                         isLoading = false;

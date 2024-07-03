@@ -12,6 +12,7 @@ class CourseTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: const BoxConstraints(maxWidth: 450),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(16)),
@@ -38,15 +39,14 @@ class CourseTile extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset('assets/icons/icon_star.svg'),
-                      Text(
-                        "4.8",
-                        style: AppStyle.semibold.copyWith(fontSize: 16),
+                      SvgPicture.asset(
+                        'assets/icons/icon_flag.svg',
+                        color: const Color(0xff858585),
                       ),
                       Text(
-                        "  (2000 recensioni)",
-                        style: AppStyle.light.copyWith(fontSize: 16),
-                      )
+                        "${course.numberLessons} Lezioni",
+                        style: AppStyle.light.copyWith(fontSize: 14),
+                      ),
                     ],
                   )
                 ],

@@ -19,20 +19,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  bool isLoading = false;
   @override
   void initState() {
-    /*WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      User? u = await AuthenticationProvider.signInWithEmailAndPassword(
-          "simone.giammusso@gmail.com", "ciaociao");
-      if (u != null) {
-        Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) {
-            return const HomeScreen();
-          },
-        ));
-      }
-    });*/
     super.initState();
   }
 
@@ -40,63 +29,73 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppStyle.black,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 450,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(flex: 2, child: Container()),
-              Text(
-                "Benvenuto in KnowAI",
-                style: AppStyle.title,
-              ),
-              Text(
-                "Inserisci le tue credenziali",
-                style: AppStyle.regular.copyWith(fontSize: 20),
-              ),
-              Expanded(child: Container()),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Email",
-                  style: AppStyle.regular,
+      body: Align(
+        alignment: Alignment.center,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 450,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(flex: 2, child: Container()),
+                Text(
+                  "Benvenuto in KnowAI",
+                  style: AppStyle.title,
                 ),
-              ),
-              InputField(controller: emailController, isEmail: true),
-              const SizedBox(
-                height: 8,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Password",
-                  style: AppStyle.regular,
+                Text(
+                  "Inserisci le tue credenziali",
+                  style: AppStyle.regular.copyWith(fontSize: 20),
                 ),
-              ),
-              InputField(controller: passwordController, isPassword: true),
-              const SizedBox(
-                height: 8,
-              ),
-              PrimaryButton(
-                  text: "Accedi",
-                  onTap: () async {
-                    User? u =
-                        await AuthenticationProvider.signInWithEmailAndPassword(
-                            emailController.text, passwordController.text);
-                    if (u != null) {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const HomeScreen();
-                        },
-                      ));
-                    }
-                  }),
-              Expanded(flex: 4, child: Container())
-            ],
+                Expanded(child: Container()),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Email",
+                    style: AppStyle.regular,
+                  ),
+                ),
+                InputField(controller: emailController, isEmail: true),
+                const SizedBox(
+                  height: 8,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Password",
+                    style: AppStyle.regular,
+                  ),
+                ),
+                InputField(controller: passwordController, isPassword: true),
+                const SizedBox(
+                  height: 8,
+                ),
+                PrimaryButton(
+                    isLoading: isLoading,
+                    text: "Accedi",
+                    onTap: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+                      User? u = await AuthenticationProvider
+                          .signInWithEmailAndPassword(
+                              emailController.text, passwordController.text);
+                      setState(() {
+                        isLoading = false;
+                      });
+                      if (u != null) {
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const HomeScreen();
+                          },
+                        ));
+                      }
+                    }),
+                Expanded(flex: 4, child: Container())
+              ],
+            ),
           ),
         ),
       ),

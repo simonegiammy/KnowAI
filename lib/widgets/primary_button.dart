@@ -5,7 +5,12 @@ import 'package:flutter_svg/svg.dart';
 class PrimaryButton extends StatelessWidget {
   final String text;
   final Function() onTap;
-  const PrimaryButton({super.key, required this.text, required this.onTap});
+  bool isLoading = false;
+  PrimaryButton(
+      {super.key,
+      required this.text,
+      required this.onTap,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +22,12 @@ class PrimaryButton extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             color: AppStyle.greenDark),
         child: Center(
-          child: Text(
-            text,
-            style: AppStyle.semibold,
-          ),
+          child: isLoading
+              ? const CircularProgressIndicator()
+              : Text(
+                  text,
+                  style: AppStyle.semibold,
+                ),
         ),
       ),
     );

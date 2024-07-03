@@ -2,6 +2,7 @@ import 'package:KnowAI/data_provider/ai_provider.dart';
 import 'package:KnowAI/data_provider/courses_provider.dart';
 import 'package:KnowAI/model/course.dart';
 import 'package:KnowAI/model/lesson.dart';
+import 'package:KnowAI/screens/course_screen.dart';
 import 'package:KnowAI/screens/lesson_screen.dart';
 import 'package:KnowAI/style.dart';
 import 'package:KnowAI/widgets/button.dart';
@@ -74,105 +75,108 @@ class _PreviewCourseScreenState extends State<PreviewCourseScreen> {
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                height: 48,
-                                width: 48,
-                                child: FittedBox(
-                                  child: AppButton(
-                                      iconPath: 'assets/icons/icon_back.svg',
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      }),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 48,
+                            width: 48,
+                            child: FittedBox(
+                              child: AppButton(
+                                  iconPath: 'assets/icons/icon_back.svg',
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, top: 4),
+                      child: Text(
+                        "KnowAI ti propone questo corso:",
+                        style: AppStyle.semibold,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  course!.category!,
+                                  style: AppStyle.regular.copyWith(
+                                      color: const Color(0xff858585),
+                                      fontSize: 16),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16, top: 4),
-                          child: Text(
-                            "KnowAI ti propone questo corso:",
-                            style: AppStyle.semibold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      course!.category!,
-                                      style: AppStyle.regular.copyWith(
-                                          color: const Color(0xff858585),
-                                          fontSize: 16),
-                                    ),
-                                    Text(
-                                      course!.title!,
-                                      style: AppStyle.semibold
-                                          .copyWith(fontSize: 24, height: 1),
-                                    ),
-                                    _buildLessonTime(),
-                                  ],
+                                Text(
+                                  course!.title!,
+                                  style: AppStyle.semibold
+                                      .copyWith(fontSize: 24, height: 1),
                                 ),
-                              ),
-                              if (course?.imageUrl != null)
-                                Container(
-                                  width: 90,
-                                  height: 90,
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                      color:
-                                          AppStyle.greenDark.withOpacity(0.3),
-                                      border: Border.all(
-                                          color: const Color(0xfff0f0f0)
-                                              .withOpacity(0.3)),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12))),
-                                  child: Image.network(course!.imageUrl!),
-                                )
-                            ],
+                                _buildLessonTime(),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: SecondaryButton(
-                              color: AppStyle.greenLight,
-                              iconPath: "assets/icons/icon_generate.svg",
-                              text: "Completa la creazione del corso",
-                              onTap: () {
-                                CoursesProvider.createCourse(course!);
-                                CoursesProvider.createLessons(
-                                    lessons!, course!.id!);
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst);
-                              }),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 12, horizontal: 20),
-                          margin: const EdgeInsets.only(top: 16),
-                          decoration: const BoxDecoration(
-                              color: Color(0xff374B46),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(32),
-                                  topRight: Radius.circular(32))),
-                          child: _buildContent(),
-                        ),
-                      ],
-                    )
+                          if (course?.imageUrl != null)
+                            Container(
+                              width: 90,
+                              height: 90,
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                  color: AppStyle.greenDark.withOpacity(0.3),
+                                  border: Border.all(
+                                      color: const Color(0xfff0f0f0)
+                                          .withOpacity(0.3)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12))),
+                              child: Image.network(course!.imageUrl!),
+                            )
+                        ],
+                      ),
+                    ),
+                    if (!loadingLessons)
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 500),
+                        margin: const EdgeInsets.symmetric(horizontal: 16),
+                        child: SecondaryButton(
+                            color: AppStyle.greenLight,
+                            iconPath: "assets/icons/icon_generate.svg",
+                            text: "Completa la creazione del corso",
+                            onTap: () {
+                              CoursesProvider.createCourse(course!);
+                              CoursesProvider.createLessons(
+                                  lessons!, course!.id!);
+                              Navigator.popUntil(
+                                  context, (route) => route.isFirst);
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) {
+                                  return CourseScreen(course: course!);
+                                },
+                              ));
+                            }),
+                      ),
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 20),
+                      margin: const EdgeInsets.only(top: 16),
+                      decoration: const BoxDecoration(
+                          color: Color(0xff374B46),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(32),
+                              topRight: Radius.circular(32))),
+                      child: _buildContent(),
+                    ),
                   ],
                 ),
               )));
@@ -201,39 +205,44 @@ class _PreviewCourseScreenState extends State<PreviewCourseScreen> {
 
   _buildContent() {
     if (course != null) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Riguardo questo corso:",
-            style: AppStyle.semibold.copyWith(fontSize: 20),
-          ),
-          Text(
-            course!.description!,
-            style: AppStyle.regular.copyWith(fontSize: 16),
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          "Riguardo questo corso:",
+          style: AppStyle.semibold.copyWith(fontSize: 20),
+        ),
+        Text(
+          course!.description!,
+          style: AppStyle.regular.copyWith(fontSize: 16),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        if (loadingLessons) ...[
+          const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
           ),
           const SizedBox(
             height: 8,
           ),
+          Center(
+            child: Text(
+              "Kai sta generando il tuo piano di apprendimento personalizzato...",
+              style: AppStyle.semibold,
+            ).animate(
+              onComplete: (controller) {
+                controller.repeat();
+              },
+            ).shimmer(color: Colors.green),
+          )
+        ] else ...[
           Text(
             "Lezioni:",
             style: AppStyle.semibold.copyWith(fontSize: 20),
           ),
-          if (loadingLessons) ...[
-            const Center(
-              child: CircularProgressIndicator(),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Center(
-              child: Text(
-                "Kai sta generando il tuo piano di apprendimnento personalizzato",
-                style: AppStyle.semibold,
-              ),
-            )
-          ],
-          Column(
+          Wrap(
+            spacing: 8,
             children: [
               for (Lesson l in lessons ?? [])
                 LessonTile(
@@ -244,7 +253,7 @@ class _PreviewCourseScreenState extends State<PreviewCourseScreen> {
             ],
           ),
         ],
-      );
+      ]);
     }
   }
 }

@@ -65,6 +65,7 @@ class _CourseScreenState extends State<CourseScreen> {
                     return FlexibleSpaceBar(
                         expandedTitleScale: 1,
                         title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -101,6 +102,7 @@ class _CourseScreenState extends State<CourseScreen> {
                               Opacity(
                                 opacity: normalized,
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     CourseTile(
                                         showBackground: false,
@@ -112,7 +114,9 @@ class _CourseScreenState extends State<CourseScreen> {
                                         child: Row(
                                           children: [
                                             _buildLessonTime(),
-                                            Expanded(child: Container()),
+                                            Container(
+                                              width: 38,
+                                            ),
                                             _buildButtons(),
                                           ],
                                         ),
@@ -126,6 +130,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
+                    height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 20),
@@ -152,7 +157,7 @@ class _CourseScreenState extends State<CourseScreen> {
               .copyWith(color: const Color(0xff858585), fontSize: 16),
         ),
         Text(
-          "15 Lezioni: 1h 45m",
+          "${widget.course.numberLessons} lezioni",
           style: AppStyle.semibold.copyWith(color: Colors.white, fontSize: 18),
         ),
       ],
@@ -203,7 +208,9 @@ class _CourseScreenState extends State<CourseScreen> {
           "Lezioni:",
           style: AppStyle.semibold.copyWith(fontSize: 20),
         ),
-        Column(
+        Wrap(
+          runSpacing: 8,
+          spacing: 8,
           children: [
             for (Lesson l in lessons ?? [])
               GestureDetector(

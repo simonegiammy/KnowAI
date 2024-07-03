@@ -8,9 +8,11 @@ class InputField extends StatelessWidget {
   String? iconPath;
   bool isEmail;
   bool isPassword;
+  Function()? onSumbit;
   InputField(
       {super.key,
       required this.controller,
+      this.onSumbit,
       this.maxLines = 1,
       this.iconPath,
       this.isEmail = false,
@@ -19,6 +21,11 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onSubmitted: (value) {
+        if (onSumbit != null) {
+          onSumbit!();
+        }
+      },
       minLines: 1,
       maxLines: maxLines,
       style: AppStyle.regular,
